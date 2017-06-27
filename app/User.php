@@ -42,7 +42,7 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
             return false;
         }
         $auth_data = Authentication::verifyAuthorizationCode($this->authorization_code);
-        if ($auth_data !== false) {
+        if ($auth_data != false) {
             $this->refresh_token = $auth_data->refresh_token;
             $this->access_token = $auth_data->access_token;
             $this->save();
@@ -66,7 +66,7 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
         }
         $delete_old_user = true;
         $character_data = Authentication::verifyAccessToken($this->access_token);
-        if ($character_data !== false && isset($character_data->CharacterID)) {
+        if ($character_data != false && isset($character_data->CharacterID)) {
             // Transfer to the old user.
             $old_user = User::whereCharacterId($character_data->CharacterID)->first();
             if ($old_user === null) {

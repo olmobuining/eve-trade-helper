@@ -40,10 +40,12 @@ class AuthController extends Controller
         }
         $verified = $user->verifyAuthorizationCode();
         if ($verified === false) {
+            \Session::flash('flash_message', 'Verification of authorization code failed, please try again.');
             return Redirect::to('login');
         }
         $character_data_received = $user->getCharacterData();
         if ($character_data_received === false) {
+            \Session::flash('flash_message', 'Could not receive character data, please try again.');
             return Redirect::to('login');
         }
 

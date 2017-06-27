@@ -182,6 +182,11 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
+            @if (Session::has('flash_message'))
+                <div class="alert-block ale alert-error alert">
+                    {{ Session::get('flash_message') }}
+                </div>
+            @endif
             @yield('content')
         </div>
         <!-- /page content -->

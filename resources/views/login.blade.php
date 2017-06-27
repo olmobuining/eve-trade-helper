@@ -37,17 +37,13 @@
             <section class="login_content">
                 <form>
                     <h1>EVE Trade Helper</h1>
+                    @if (Session::has('flash_message'))
+                        <div class="alert-block ale alert-error alert">
+                            {{ Session::get('flash_message') }}
+                        </div>
+                    @endif
                     <div>
-
                         <a href="https://login.eveonline.com/oauth/authorize?response_type=code&redirect_uri=http://eve-trade-helper.dev/callback&client_id={{$client_id}}&scope=characterWalletRead characterAssetsRead characterMarketOrdersRead characterAccountRead corporationWalletRead corporationAssetsRead corporationMarketOrdersRead esi-wallet.read_character_wallet.v1 esi-assets.read_assets.v1 esi-markets.read_character_orders.v1&state={{$state}}"><img alt="EVE SSO Login" src="https://images.contentful.com/idjq7aai9ylm/4PTzeiAshqiM8osU2giO0Y/5cc4cb60bac52422da2e45db87b6819c/EVE_SSO_Login_Buttons_Large_White.png?w=270&amp;h=45"></a>
-                        {{--<input type="text" class="form-control" placeholder="Username" required="" />--}}
-                    </div>
-                    <div>
-                        {{--<input type="password" class="form-control" placeholder="Password" required="" />--}}
-                    </div>
-                    <div>
-                        {{--<a class="btn btn-default submit" href="index.html">Log in</a>--}}
-                        {{--<a class="reset_pass" href="#">Lost your password?</a>--}}
                     </div>
                 </form>
             </section>
