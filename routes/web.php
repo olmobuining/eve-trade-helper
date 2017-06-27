@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@home');
+
+Route::get('login', [ 'as' => 'login', 'uses' => 'AuthController@login']);
+Route::get('callback', 'AuthController@callback');

@@ -18,11 +18,11 @@ services:
     volumes_from:
       - app
     ports:
-      - 8080:80
+      - 80:80
   database:
-      image: mysql:5.6
+      image: mysql:8.0
       volumes:
-        - dbdata:/var/lib/mysql
+        - dbdatas:/var/lib/mysql
       environment:
         - "MYSQL_DATABASE=homestead"
         - "MYSQL_USER=homestead"
@@ -31,5 +31,5 @@ services:
       ports:
           - "33061:3306"
 
-  volumes:
-    dbdata:
+volumes:
+  dbdatas:

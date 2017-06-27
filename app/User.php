@@ -2,28 +2,123 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\OAuth\ESI\Authentication;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
-class User extends Authenticatable
+/**
+ * App\User
+ *
+ * @property string $access_token
+ * @property string $authorization_code
+ * @property string $character_id
+ * @property string $character_name
+ * @property \Carbon\Carbon $created_at
+ * @property string $email
+ * @property string $expire_datetime
+ * @property int $id
+ * @property string $refresh_token
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAccessToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAuthorizationCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCharacterId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCharacterName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereExpireDatetime($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRefreshToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ */
+class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
 {
-    use Notifiable;
+    /**
+     * Verify if the users Authorization code is correct, by getting the access token.
+     * @return bool
+     */
+    public function verifyAuthorizationCode()
+    {
+        if (empty($this->authorization_code)) {
+            return false;
+        }
+        $auth_data = Authentication::verifyAuthorizationCode($this->authorization_code);
+        if ($auth_data !== false) {
+            $this->refresh_token = $auth_data->refresh_token;
+            $this->access_token = $auth_data->access_token;
+            $this->save();
+            return true;
+        }
+        return false;
+    }
 
     /**
-     * The attributes that are mass assignable.
+     * Get Character ID and name by verifying the access token.
+     * After receiving the data, we save this data on the user,
+     * because almost every call is based upon the Character ID.
+     * Saving the Character Name, because it's nice to show the user has selected the correct user.
      *
-     * @var array
+     * @return bool
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    public function getCharacterData()
+    {
+        if (empty($this->access_token)) {
+            return false;
+        }
+        $delete_old_user = true;
+        $character_data = Authentication::verifyAccessToken($this->access_token);
+        if ($character_data !== false && isset($character_data->CharacterID)) {
+            // Transfer to the old user.
+            $old_user = User::whereCharacterId($character_data->CharacterID)->first();
+            if ($old_user === null) {
+                $old_user = $this;
+                $delete_old_user = false;
+            }
+            $old_user->access_token = $this->access_token;
+            $old_user->refresh_token = $this->refresh_token;
+            $old_user->authorization_code = $this->authorization_code;
+            $old_user->refresh_token = $this->refresh_token;
+            if ($delete_old_user) {
+                // delete the user that was created
+                $this->delete();
+            }
+            $old_user->character_id     = $character_data->CharacterID;
+            $old_user->character_name   = $character_data->CharacterName;
+            $old_user->save();
+            Auth::login($old_user);
+            return true;
+        }
+        return false;
+    }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function getAuthIdentifierName()
+    {
+        return 'character_id';
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->character_id;
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->access_token;
+    }
+
+    public function getRememberToken()
+    {
+        return 'remembertoken';
+    }
+
+    public function setRememberToken($value = '123')
+    {
+        return $value;
+    }
+
+    public function getRememberTokenName()
+    {
+        return 'access_token';
+    }
+
+
 }
