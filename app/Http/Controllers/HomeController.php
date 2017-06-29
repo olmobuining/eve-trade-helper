@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\OAuth\ESI\Market;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +19,8 @@ class HomeController extends Controller
         $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
         $character_name = $user->character_name;
 
-        return view('welcome', compact('character_name'));
+        $orders = Market::getOrdersByCharacter($user);
+
+        return view('welcome', compact('character_name', 'orders'));
     }
 }
