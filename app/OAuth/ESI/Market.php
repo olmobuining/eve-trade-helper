@@ -14,6 +14,6 @@ class Market extends ESI
         $orders_uri = ESI::BASE_URI . '/characters/' . $user->character_id . '/orders/';
         self::setLocation($orders_uri);
         self::addBearerAuthorization($user);
-        return self::callCurl();
+        return self::send();
     }
 }

@@ -24,7 +24,7 @@ class Authentication extends ESI
             'grant_type' => 'authorization_code',
             'code'       => $auth_code,
         ]);
-        return self::callCurl();
+        return self::send();
     }
 
     public static function verifyAccessToken($access_token)
@@ -34,7 +34,7 @@ class Authentication extends ESI
         }
         self::setLocation(self::VERIFY_URI);
         self::setBearerAuthorization($access_token);
-        return self::callCurl();
+        return self::send();
     }
 
     public static function refreshAccessToken()

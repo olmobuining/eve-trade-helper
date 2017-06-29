@@ -67,7 +67,7 @@ class CurlCall
         curl_setopt(self::getCurl(), CURLOPT_POSTFIELDS, rawurldecode(http_build_query(self::$post_values)));
     }
 
-    protected static function callCurl()
+    protected static function send()
     {
         try {
             $data = json_decode(curl_exec(self::getCurl()));
