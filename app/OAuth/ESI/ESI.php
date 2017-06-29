@@ -6,7 +6,6 @@ use App\User;
 
 class ESI extends CurlCall
 {
-
     const BASE_URI = 'https://esi.tech.ccp.is/latest';
 
     /**
@@ -27,11 +26,20 @@ class ESI extends CurlCall
      */
     protected static function addBearerAuthorization(User $user)
     {
+        self::setBearerAuthorization($user->access_token);
+    }
+
+    /**
+     * Sets the header `Authorization` in the curl call with `Bearer {{access_token}}`
+     * @param string $access_token
+     */
+    protected static function setBearerAuthorization($access_token)
+    {
         curl_setopt(
             self::getCurl(),
             CURLOPT_HTTPHEADER,
             [
-                'Authorization: Bearer ' . $user->access_token,
+                'Authorization: Bearer ' . $access_token,
             ]
         );
     }

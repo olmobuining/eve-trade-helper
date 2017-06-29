@@ -5,7 +5,7 @@ namespace App\OAuth\ESI;
 class Authentication extends ESI
 {
     const AUTHORIZATION_URI = 'https://login.eveonline.com/oauth/token';
-    const VERIFY_URI        = 'https://login.eveonline.com/oauth/token';
+    const VERIFY_URI        = 'https://login.eveonline.com/oauth/verify';
 
     /**
      * Does the call to get the accesstoken and such.. need to improve.
@@ -14,6 +14,9 @@ class Authentication extends ESI
      */
     public static function verifyAuthorizationCode($auth_code)
     {
+        if (empty($auth_code)) {
+            throw new \InvalidArgumentException('Authorization code cannot be empty.');
+        }
         self::setLocation(self::AUTHORIZATION_URI);
         self::setPost();
         self::setAuthentication();
@@ -29,24 +32,9 @@ class Authentication extends ESI
         if (empty($access_token)) {
             throw new \InvalidArgumentException('Access token cannot be empty.');
         }
-
-        try {
-            $curl = curl_init('https://login.eveonline.com/oauth/verify');
-            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_POST, false);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, [
-                'Authorization: Bearer ' . $access_token,
-            ]);
-
-            $data = json_decode(curl_exec($curl));
-            if (!empty($data->error)) {
-                return false;
-            }
-            return $data;
-        } catch (\Exception $excep) {
-            return false;
-        }
+        self::setLocation(self::VERIFY_URI);
+        self::setBearerAuthorization($access_token);
+        return self::callCurl();
     }
 
     public static function refreshAccessToken()

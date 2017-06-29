@@ -32,6 +32,10 @@ class CurlCall
     protected static function setLocation($uri)
     {
         self::$location = $uri;
+        // After setting a different location, undo the previous curl instance.
+        if (self::$curl != '') {
+            self::$curl = '';
+        }
     }
 
     /**
