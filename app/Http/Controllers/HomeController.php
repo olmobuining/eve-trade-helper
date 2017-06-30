@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\EveSDE\Inventory\Type;
 use App\OAuth\ESI\Market;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,9 @@ class HomeController extends Controller
         $character_name = $user->character_name;
 
         $orders = Market::getOrdersByCharacter($user);
+        foreach ($orders as &$order) {
+            $order->type_name = Type::where(['typeID' => $order->type_id])->first()->typeName;
+        }
 
         return view('welcome', compact('character_name', 'orders'));
     }

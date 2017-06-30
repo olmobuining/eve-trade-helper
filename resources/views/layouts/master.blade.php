@@ -101,7 +101,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 {{--<img src="images/img.jpg" alt="">--}}
-                                John Doe
+                                {{ $character_name }}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
