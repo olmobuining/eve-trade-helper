@@ -20,7 +20,7 @@ services:
     ports:
       - 80:80
   database:
-      image: mysql:8.0
+      image: mysql:5.6
       volumes:
         - dbdatas:/var/lib/mysql
       environment:
