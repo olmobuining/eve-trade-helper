@@ -37,7 +37,7 @@
                                             {{number_format($order->price,0,",",".")}}
                                         </td>
                                         <td>
-                                            {{$order->type_name}}
+                                            {{$order->getInventoryName()}}
                                         </td>
                                         <td>
                                             {{$order->volume_remain}}

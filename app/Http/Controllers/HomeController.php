@@ -21,9 +21,6 @@ class HomeController extends Controller
         $character_name = $user->character_name;
 
         $orders = Market::getOrdersByCharacter($user);
-        foreach ($orders as &$order) {
-            $order->type_name = Type::where(['typeID' => $order->type_id])->first()->typeName;
-        }
 
         return view('welcome', compact('character_name', 'orders'));
     }

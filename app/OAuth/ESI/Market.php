@@ -1,6 +1,7 @@
 <?php
 namespace App\OAuth\ESI;
 
+use App\Order;
 use App\User;
 
 class Market extends ESI
@@ -14,6 +15,7 @@ class Market extends ESI
         $orders_uri = ESI::BASE_URI . '/characters/' . $user->character_id . '/orders/';
         self::setLocation($orders_uri);
         self::addBearerAuthorization($user);
-        return self::send();
+        $esi_array = self::send();
+        return Order::esiToObjects($esi_array);
     }
 }
