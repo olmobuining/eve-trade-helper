@@ -69,8 +69,8 @@ class Order extends Model
     public function getInventoryName()
     {
         if (!property_exists($this, 'type_name')) {
-            $this->type_name = $this->type()->first()->typeName;
+            $this->type_name = $this->type()->first()->getName();
         }
-        return $this->type_name;
+        return $this->getName();
     }
 }

@@ -46,4 +46,12 @@ class Type extends Model
      * @var string
      */
     protected $table = 'inv_types';
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->typeName;
+    }
 }

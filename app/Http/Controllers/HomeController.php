@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\EveSDE\Inventory\Type;
 use App\OAuth\ESI\Market;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +19,7 @@ class HomeController extends Controller
         $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
         $character_name = $user->character_name;
 
-        $orders = Market::getOrdersByCharacter($user);
+        $orders = Market::getOrdersByCharacter($user->character_id);
 
         return view('welcome', compact('character_name', 'orders'));
     }

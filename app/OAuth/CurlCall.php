@@ -63,6 +63,7 @@ class CurlCall
             return false;
         }
         self::$post_values = $post_array;
+        self::setPost();
 
         curl_setopt(self::getCurl(), CURLOPT_POSTFIELDS, rawurldecode(http_build_query(self::$post_values)));
     }
@@ -72,15 +73,15 @@ class CurlCall
         try {
             $data = json_decode(curl_exec(self::getCurl()));
             if (!empty($data->error)) {
-                dd($data);
                 curl_close(self::getCurl());
+                dd($data); // Just for the test fase (@todo remove before prod tests)
                 return false;
             }
             curl_close(self::getCurl());
             return $data;
         } catch (\Exception $excep) {
-            dd($excep->getMessage());
             curl_close(self::getCurl());
+            dd($excep->getMessage()); // ust for the test fase (@todo remove before prod tests)
             return false;
         }
     }
