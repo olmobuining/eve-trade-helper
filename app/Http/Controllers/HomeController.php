@@ -20,6 +20,16 @@ class HomeController extends Controller
         $character_name = $user->character_name;
 
         $orders = Market::getOrdersByCharacter($user->character_id);
+        foreach ($orders as $order) {
+            $competition = $order->getCompetitionOrders();
+            $order->outbid = false;
+            foreach ($competition as $comp) {
+                if ($comp->price > $order->price || ($order->outbid && $order->outbid_price < $comp->price)) {
+                    $order->outbid = true;
+                    $order->outbid_price = $comp->price;
+                }
+            }
+        }
 
         return view('welcome', compact('character_name', 'orders'));
     }

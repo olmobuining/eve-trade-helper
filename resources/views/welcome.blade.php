@@ -17,30 +17,44 @@
                             <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
                                 <thead>
                                 <tr>
-                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">B/S</th>
+                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending" style="width:30px;"><i class="fa fa-info-circle"></i></th>
+                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending" style="width:20px;">Q</th>
                                     <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Price</th>
                                     <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Product</th>
-                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Quantity</th>
+                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Outbid</th>
+                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Outbid price</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($orders as $order)
+                                @foreach ($orders as $order)
                                     <tr>
                                         <td>
-                                            @if($order->is_buy_order)
+                                            @if ($order->is_buy_order)
                                                 BUY
                                             @else
                                                 SELL
                                             @endif
                                         </td>
                                         <td>
-                                            {{number_format($order->price,0,",",".")}}
+                                            {{ $order->volume_remain }}
                                         </td>
                                         <td>
-                                            {{$order->getInventoryName()}}
+                                            {{ number_format($order->price, 0, ",", ".") }}
                                         </td>
                                         <td>
-                                            {{$order->volume_remain}}
+                                            {{ $order->getInventoryName() }}
+                                        </td>
+                                        <td>
+                                            @if ($order->outbid)
+                                                Yes
+                                            @else
+                                                No
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($order->outbid)
+                                                {{ number_format($order->outbid_price, 0, ",", ".") }}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

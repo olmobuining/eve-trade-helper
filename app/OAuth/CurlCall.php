@@ -6,6 +6,7 @@ class CurlCall
     private static $curl               = '';
     private static $location           = '';
     private static $post_values        = '';
+    private static $get_values         = '';
 
     protected static function getCurl()
     {
@@ -66,6 +67,25 @@ class CurlCall
         self::setPost();
 
         curl_setopt(self::getCurl(), CURLOPT_POSTFIELDS, rawurldecode(http_build_query(self::$post_values)));
+    }
+
+    /**
+     * Sets and overwrites the post values.
+     * @param array $post_array
+     * @return bool
+     */
+    protected static function setGetValues($get_array = [])
+    {
+        if (!is_array($get_array)) {
+            return false;
+        }
+        self::$get_values = $get_array;
+
+        curl_setopt(
+            self::getCurl(),
+            CURLOPT_URL,
+            self::getLocation() . "?" . rawurldecode(http_build_query(self::$get_values))
+        );
     }
 
     protected static function send()

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\OAuth\ESI\Market;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -71,6 +72,14 @@ class Order extends Model
         if (!property_exists($this, 'type_name')) {
             $this->type_name = $this->type()->first()->getName();
         }
-        return $this->getName();
+        return $this->type_name;
+    }
+
+    /**
+     * @return Order[]
+     */
+    public function getCompetitionOrders()
+    {
+        return Market::getOrdersInRegionByTypeId($this->region_id, $this->type_id);
     }
 }
