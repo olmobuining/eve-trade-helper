@@ -14,7 +14,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');" \
     && php composer.phar install --no-dev --no-scripts \
     && php composer.phar dump-autoload \
-    && php composer.phar cache-clear \
     && rm composer.phar
 
 
