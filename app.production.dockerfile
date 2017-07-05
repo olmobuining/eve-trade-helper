@@ -13,12 +13,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
     && php composer.phar install --no-dev --no-scripts \
-    && php composer.phar dump-autoload \
-    && rm composer.phar
 
-
-RUN chown -R www-data:www-data \
-        /var/www/storage \
-        /var/www/bootstrap/cache
 
 RUN php artisan optimize
