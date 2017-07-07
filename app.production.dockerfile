@@ -1,8 +1,15 @@
-FROM shakyshane/laravel-php:latest
+FROM php:7.1-fpm
 
-COPY composer.lock composer.json /var/www/
+RUN apt-get update && apt-get install -y libmcrypt-dev \
+    mysql-client libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-install mcrypt pdo_mysql
 
-COPY database /var/www/database
+# Enable Reporting
+RUN echo "php_flag[display_errors] = On">>/usr/local/etc/php-fpm.conf
+RUN echo "php_admin_flag[log_errors] = On">>/usr/local/etc/php-fpm.conf
+RUN echo "php_admin_value[display_errors] = 'stderr'">>/usr/local/etc/php-fpm.conf
 
 WORKDIR /var/www/
 
@@ -14,5 +21,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "unlink('composer-setup.php');" \
     && php composer.phar install --no-dev --no-scripts
 
-
 RUN php artisan optimize
+
+RUN chown -R www-data:www-data /var/www
