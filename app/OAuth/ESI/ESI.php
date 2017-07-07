@@ -3,6 +3,7 @@ namespace App\OAuth\ESI;
 
 use App\OAuth\CurlCall;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class ESI extends CurlCall
 {
@@ -42,5 +43,21 @@ class ESI extends CurlCall
                 'Authorization: Bearer ' . $access_token,
             ]
         );
+    }
+
+    public static function send()
+    {
+        $data = parent::send();
+        if ($data !== false && isset($data->error)) {
+            if ($data->error === "SSO responded with a 400: expired") {
+                $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
+                $user->refreshAccessToken();
+                $data = parent::send();
+            }
+        }
+        if ($data === false) {
+            return [];
+        }
+        return $data;
     }
 }

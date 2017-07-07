@@ -94,14 +94,13 @@ class CurlCall
             $data = json_decode(curl_exec(self::getCurl()));
             if (!empty($data->error)) {
                 curl_close(self::getCurl());
-                dd($data); // Just for the test fase (@todo remove before prod tests)
-                return false;
+                return $data;
             }
             curl_close(self::getCurl());
             return $data;
         } catch (\Exception $excep) {
             curl_close(self::getCurl());
-            dd($excep->getMessage()); // ust for the test fase (@todo remove before prod tests)
+            dd($excep->getMessage()); // just for the test fase (@todo remove before prod tests)
             return false;
         }
     }

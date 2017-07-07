@@ -50,6 +50,22 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
         }
         return false;
     }
+    /**
+     */
+    public function refreshAccessToken()
+    {
+        if (empty($this->refresh_token)) {
+            return false;
+        }
+        $auth_data = Authentication::refreshAccessToken($this->refresh_token);
+        if ($auth_data != false) {
+            $this->refresh_token = $auth_data->refresh_token;
+            $this->access_token = $auth_data->access_token;
+            $this->save();
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Get Character ID and name by verifying the access token.

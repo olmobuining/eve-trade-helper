@@ -37,8 +37,17 @@ class Authentication extends ESI
         return self::send();
     }
 
-    public static function refreshAccessToken()
+    public static function refreshAccessToken($refresh_token)
     {
-        //
+        if (empty($refresh_token)) {
+            throw new \InvalidArgumentException('Access token cannot be empty.');
+        }
+        self::setLocation(self::AUTHORIZATION_URI);
+        self::setAuthentication();
+        self::setPostValues([
+            'grant_type'          => 'refresh_token',
+            'refresh_token'       => $refresh_token,
+        ]);
+        return self::send();
     }
 }

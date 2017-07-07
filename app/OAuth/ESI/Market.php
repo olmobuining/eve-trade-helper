@@ -33,4 +33,5 @@ class Market extends ESI
 
         return Order::esiToObjects($esi_array);
     }
+
 }

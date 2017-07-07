@@ -19,10 +19,10 @@
                                 <tr>
                                     <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending" style="width:30px;"><i class="fa fa-info-circle"></i></th>
                                     <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending" style="width:20px;">Q</th>
-                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Price</th>
+                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Ƶ Price</th>
                                     <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Product</th>
                                     <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Outbid</th>
-                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Outbid price</th>
+                                    <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Outbid Ƶ price</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -38,8 +38,8 @@
                                         <td>
                                             {{ $order->volume_remain }}
                                         </td>
-                                        <td>
-                                            {{ number_format($order->price, 0, ",", ".") }}
+                                        <td data-order="{{$order->price}}">
+                                            {{ number_format($order->price, 2, ",", ".") }}
                                         </td>
                                         <td>
                                             {{ $order->getInventoryName() }}
@@ -51,9 +51,9 @@
                                                 No
                                             @endif
                                         </td>
-                                        <td>
+                                        <td data-order="{{$order->outbid_price}}">
                                             @if ($order->outbid)
-                                                {{ number_format($order->outbid_price, 0, ",", ".") }}
+                                                {{ number_format($order->outbid_price, 2, ",", ".") }}
                                             @endif
                                         </td>
                                     </tr>
