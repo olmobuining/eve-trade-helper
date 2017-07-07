@@ -19,9 +19,15 @@ class Market extends ESI
         $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
         self::addBearerAuthorization($user);
         $esi_array = self::send();
+
         return Order::esiToObjects($esi_array);
     }
 
+    /**
+     * @param int $region_id
+     * @param int $type_id
+     * @return Order[]
+     */
     public static function getOrdersInRegionByTypeId(int $region_id, int $type_id)
     {
         $orders_uri = ESI::BASE_URI . '/markets/' . $region_id . '/orders/';

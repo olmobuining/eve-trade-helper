@@ -8,12 +8,16 @@ class CurlCall
     private static $post_values        = '';
     private static $get_values         = '';
 
+    /**
+     * @return resource
+     * @throws \Exception
+     */
     protected static function getCurl()
     {
         $location = self::getLocation();
         if (empty($location)) {
             throw new \Exception(
-                'Always set the location first, with \App\OAuth\ESI\Authentication::setLocation($uri); (private)'
+                'Always set the location first, with self::setLocation($uri);'
             );
         }
         if (self::$curl == '') {
@@ -88,6 +92,9 @@ class CurlCall
         );
     }
 
+    /**
+     * @return bool|mixed
+     */
     protected static function send()
     {
         try {

@@ -50,7 +50,9 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
         }
         return false;
     }
+
     /**
+     * @return bool
      */
     public function refreshAccessToken()
     {
@@ -106,31 +108,50 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function getAuthIdentifierName()
     {
         return 'character_id';
     }
 
+    /**
+     * @return string
+     */
     public function getAuthIdentifier()
     {
         return $this->character_id;
     }
 
+    /**
+     * @return string
+     */
     public function getAuthPassword()
     {
         return $this->access_token;
     }
 
+    /**
+     * @return string
+     */
     public function getRememberToken()
     {
         return 'remembertoken';
     }
 
+    /**
+     * @param string $value
+     * @return string
+     */
     public function setRememberToken($value = '123')
     {
         return $value;
     }
 
+    /**
+     * @return string
+     */
     public function getRememberTokenName()
     {
         return 'access_token';

@@ -45,6 +45,11 @@ class ESI extends CurlCall
         );
     }
 
+    /**
+     * overrule send method. This will force refresh token, if it has the correct error token.
+     * returns an empty array if something else is wrong.
+     * @return array|bool|mixed
+     */
     public static function send()
     {
         $data = parent::send();
