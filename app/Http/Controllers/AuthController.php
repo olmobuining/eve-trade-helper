@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 
@@ -19,6 +20,11 @@ class AuthController extends Controller
         return view('login', compact('state', 'client_id'));
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return Redirect::route('login');
+    }
     /**
      * EVE Swagger Interface returns the user to this URL after login and authorisation.
      */
