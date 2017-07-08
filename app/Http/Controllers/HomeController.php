@@ -18,6 +18,7 @@ class HomeController extends Controller
         $this->middleware('auth');
         $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
         $character_name = $user->character_name;
+        $transactions = $user->getWalletTransactions();
 
         $orders = Market::getOrdersByCharacter($user->character_id);
         foreach ($orders as $order) {
@@ -31,6 +32,6 @@ class HomeController extends Controller
             }
         }
 
-        return view('welcome', compact('character_name', 'orders'));
+        return view('welcome', compact('character_name', 'orders', 'transactions'));
     }
 }

@@ -58,4 +58,45 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Transactions</div>
+                <div class="panel-body">
+                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                        <thead>
+                        <tr>
+                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending" style="width:30px;"><i class="fa fa-info-circle"></i></th>
+                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Ƶ Price</th>
+                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Product</th>
+                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($transactions as $transaction)
+                            <tr>
+                                <td>
+                                    @if ($transaction->is_buy)
+                                        BUY
+                                    @else
+                                        SELL
+                                    @endif
+                                </td>
+                                <td data-order="{{$transaction->unit_price}}">
+                                    {{ number_format($transaction->unit_price, 2, ",", ".") }}
+                                </td>
+                                <td>
+                                    {{ $transaction->getInventoryName() }}
+                                </td>
+                                <td>
+                                    {{ $transaction->date }}
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

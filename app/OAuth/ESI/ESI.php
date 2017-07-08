@@ -58,10 +58,9 @@ class ESI extends CurlCall
                 $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
                 $user->refreshAccessToken();
                 $data = parent::send();
+            } elseif (isset($data->error)) {
+                $data = false;
             }
-        }
-        if ($data === false) {
-            return [];
         }
         return $data;
     }
