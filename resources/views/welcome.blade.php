@@ -8,15 +8,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Buy and sell market orders</div>
                 <div class="panel-body">
-                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info" data-order="[[ 2, &quot;desc&quot; ]]">
                         <thead>
                         <tr>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending" style="width:30px;"><i class="fa fa-info-circle"></i></th>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending" style="width:20px;">Q</th>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Ƶ Price</th>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Product</th>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Outbid</th>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Outbid Ƶ price</th>
+                            <th style="width:30px;"><i class="fa fa-info-circle"></i></th>
+                            <th style="width:20px;">Q</th>
+                            <th>Ƶ Price</th>
+                            <th>Ƶ Price in The Forge</th>
+                            <th>Product</th>
+                            <th>Outbid</th>
+                            <th>Outbid Ƶ price</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,6 +35,9 @@
                                 </td>
                                 <td data-order="{{$order->price}}">
                                     {{ number_format($order->price, 2, ",", ".") }}
+                                </td>
+                                <td data-order="{{$order->forge_price}}">
+                                    {{ number_format($order->forge_price, 2, ",", ".") }}
                                 </td>
                                 <td>
                                     {{ $order->getInventoryName() }}
@@ -63,13 +67,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Transactions</div>
                 <div class="panel-body">
-                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info">
+                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info" data-order="[[ 3, &quot;desc&quot; ]]">
                         <thead>
                         <tr>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending" style="width:30px;"><i class="fa fa-info-circle"></i></th>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Ƶ Price</th>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Product</th>
-                            <th class="sorting" aria-controls="datatable" aria-label="Position: activate to sort column ascending">Date</th>
+                            <th style="width:30px;"><i class="fa fa-info-circle"></i></th>
+                            <th>Ƶ Price</th>
+                            <th>Product</th>
+                            <th>Date</th>
                         </tr>
                         </thead>
                         <tbody>

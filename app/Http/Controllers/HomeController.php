@@ -28,6 +28,13 @@ class HomeController extends Controller
                     $order->outbid_price = $comp->price;
                 }
             }
+            $order->forge_price = 0;
+            $theforge = $order->getPriceInTheForge();
+            foreach ($theforge as $forge) {
+                if ($order->forge_price > $forge->price || $order->forge_price == 0) {
+                    $order->forge_price = $forge->price;
+                }
+            }
         }
 
         $transactions = $user->getWalletTransactions();

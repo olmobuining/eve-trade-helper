@@ -82,4 +82,13 @@ class Order extends Model
     {
         return Market::getOrdersInRegionByTypeId($this->region_id, $this->type_id);
     }
+
+    /**
+     * Gets prices from region 'The Forge' with a cached time of 1 day.
+     * @return Order[]
+     */
+    public function getPriceInTheForge()
+    {
+        return Market::getOrdersInRegionByTypeId(10000002, $this->type_id, 'sell', 86400);
+    }
 }
