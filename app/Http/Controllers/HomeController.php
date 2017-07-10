@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\OAuth\ESI\Market;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -15,11 +16,8 @@ class HomeController extends Controller
 
     public function home()
     {
-        $this->middleware('auth');
         $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
         $character_name = $user->character_name;
-        $transactions = $user->getWalletTransactions();
-
         $orders = Market::getOrdersByCharacter($user->character_id);
         foreach ($orders as $order) {
             $competition = $order->getCompetitionOrders();
@@ -31,6 +29,8 @@ class HomeController extends Controller
                 }
             }
         }
+
+        $transactions = $user->getWalletTransactions();
 
         return view('welcome', compact('character_name', 'orders', 'transactions'));
     }
