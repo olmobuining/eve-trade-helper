@@ -19,7 +19,7 @@ docker-compose exec app {yourcommandhere}
 ```
 Note: Do NOT forget to run `composer install`.
 
-## To-do list
+## Technical and function to-do list
 - [ ] Outbid price based on sell instead of only buy
 - [ ] Caching on Transactions API call
 - [ ] Calculate total costs made on the market
@@ -35,5 +35,6 @@ Note: Do NOT forget to run `composer install`.
 - [ ] Remember me functionality?
 - [ ] Pretty format date in transactions
 - [ ] Convert ESI classes into a composer package
+- [ ] Move redis caching logic in the Market class to a independent way.
 
-And more.. if you have any feature requests or idea's, please let me know. (by creating an issue)
+And more... if you have any feature requests or idea's, please let me know. (by creating an issue)
