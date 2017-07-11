@@ -3,11 +3,10 @@
 namespace App;
 
 use App\OAuth\ESI\Market;
-use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Order extends ESIModel
 {
-    private static $mapping = [
+    public static $mapping = [
         'account_id'       => null,
         "duration"         => 'duration',
         "escrow"           => 'escrow',
@@ -25,35 +24,6 @@ class Order extends Model
         "volume_remain"    => 'volume_remain',
         "volume_total"     => 'volume_total',
     ];
-
-    /**
-     * @param array $orders
-     * @return Order[]
-     */
-    public static function esiToObjects(array $orders)
-    {
-        $new_orders_collection = [];
-        foreach ($orders as $order) {
-            $new_orders_collection[] = self::esiInstanceToObject($order);
-        }
-        return $new_orders_collection;
-    }
-
-    /**
-     * converts a single object to a Order object (normally from ESI)
-     * @param $esi
-     * @return Order
-     */
-    private static function esiInstanceToObject($esi)
-    {
-        $new_order = new Order();
-        foreach (self::$mapping as $key => $map_to) {
-            if (!empty($map_to) && property_exists($esi, $key)) {
-                $new_order->$map_to = $esi->{$key};
-            }
-        }
-        return $new_order;
-    }
 
     /**
      * Get the user that owns the phone.

@@ -2,11 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Transaction extends Model
+class Transaction extends ESIModel
 {
-    private static $mapping = [
+    public static $mapping = [
         "transaction_id" => "transaction_id",
         "date"           => "date",
         "location_id"    => "location_id",
@@ -18,35 +16,6 @@ class Transaction extends Model
         "is_personal"    => "is_personal",
         "journal_ref_id" => "journal_ref_id",
     ];
-
-    /**
-     * @param array $orders
-     * @return Order[]
-     */
-    public static function esiToObjects(array $orders)
-    {
-        $new_orders_collection = [];
-        foreach ($orders as $order) {
-            $new_orders_collection[] = self::esiInstanceToObject($order);
-        }
-        return $new_orders_collection;
-    }
-
-    /**
-     * converts a single object to a Order object (normally from ESI)
-     * @param $esi
-     * @return Transaction
-     */
-    private static function esiInstanceToObject($esi)
-    {
-        $new_transaction = new Transaction();
-        foreach (self::$mapping as $key => $map_to) {
-            if (!empty($map_to) && property_exists($esi, $key)) {
-                $new_transaction->$map_to = $esi->{$key};
-            }
-        }
-        return $new_transaction;
-    }
 
     /**
      * Get the user that owns the phone.

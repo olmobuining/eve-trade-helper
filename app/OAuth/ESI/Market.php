@@ -1,4 +1,5 @@
 <?php
+
 namespace App\OAuth\ESI;
 
 use App\Order;
@@ -10,8 +11,10 @@ class Market extends ESI
 {
     /**
      * Get orders for the authenticated user aka character
-     * @param int   $character_id
-     * @param int   $cache_time   default 300 (5 minutes)
+     *
+     * @param int $character_id An EVE character ID
+     * @param int $cache_time   default 300 (5 minutes)
+     *
      * @return Order[]
      */
     public static function getOrdersByCharacter(int $character_id, int $cache_time = 300)
@@ -36,16 +39,22 @@ class Market extends ESI
             Redis::del($cache_key);
             return [];
         }
+        /**
+         * Add comment for PhpStorm.
+         * Can't return right away, because otherwise PhpStorm will give a hint: unexpected return value.
+         * @var $orders_col \App\Order[]
+         */
         $orders_col = Order::esiToObjects($esi_array);
-
         return $orders_col;
     }
 
     /**
-     * @param int $region_id
-     * @param int $type_id
-     * @param int $cache_time   default 300 (5 minutes)
-     * @param string $order_type    'buy' or 'sell'
+     * @param int    $region_id     Return orders in this region
+     * @param int    $type_id       Return orders only for this type
+     * @param int    $cache_time    Default 300 (5 minutes)
+     * @param string $order_type    Filter buy/sell orders, return all orders by default.
+     *                              If you query without type_id, we always return both buy and sell orders.
+     *
      * @return Order[]
      */
     public static function getOrdersInRegionByTypeId(
@@ -76,9 +85,13 @@ class Market extends ESI
             Redis::del($cache_key);
             return [];
         }
-        $orders_col = Order::esiToObjects($esi_array);
-
-        return $orders_col;
+        /**
+         * Add comment for PhpStorm.
+         * Can't return right away, because otherwise PhpStorm will give a hint: unexpected return value.
+         * @var $esi_objects \App\Order[]
+         */
+        $esi_objects = Order::esiToObjects($esi_array);
+        return $esi_objects;
     }
 
 }
