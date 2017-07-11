@@ -37,12 +37,12 @@ class Order extends ESIModel
      * Return the inventory type name from the inv_type table and set it on this object, caches it on this object.
      * @return string
      */
-    public function getInventoryName()
+    public function getInventoryName() : string
     {
         if (!property_exists($this, 'type_name')) {
             $this->type_name = $this->type()->first()->getName();
         }
-        return $this->type_name;
+        return (string) $this->type_name;
     }
 
     /**
@@ -50,7 +50,26 @@ class Order extends ESIModel
      */
     public function getCompetitionOrders()
     {
-        return Market::getOrdersInRegionByTypeId($this->region_id, $this->type_id);
+        return Market::getOrdersInRegionByTypeId($this->region_id, $this->type_id, $this->getOrderType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBuyOrder() : bool
+    {
+        return (bool) $this->is_buy_order;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderType() : string
+    {
+        if ($this->isBuyOrder()) {
+            return "buy";
+        }
+        return "sell";
     }
 
     /**

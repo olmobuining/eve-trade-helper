@@ -4,6 +4,7 @@ namespace App\OAuth\ESI;
 use App\OAuth\CurlCall;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ESI extends CurlCall
 {
@@ -58,7 +59,21 @@ class ESI extends CurlCall
                 $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
                 $user->refreshAccessToken();
                 $data = parent::send();
+                Log::error(
+                    "Error 400 expired",
+                    [
+                        "data" => $data,
+                        "get_called_class" => get_called_class(),
+                    ]
+                );
             } elseif (isset($data->error)) {
+                Log::error(
+                    "Error sending message",
+                    [
+                        "data" => $data,
+                        "get_called_class" => get_called_class(),
+                    ]
+                );
                 $data = false;
             }
         }

@@ -24,11 +24,7 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td>
-                                    @if ($order->is_buy_order)
-                                        BUY
-                                    @else
-                                        SELL
-                                    @endif
+                                    {{ strtoupper($order->getOrderType()) }}
                                 </td>
                                 <td>
                                     {{ $order->volume_remain }}

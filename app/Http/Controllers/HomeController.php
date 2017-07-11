@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\OAuth\ESI\Market;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
