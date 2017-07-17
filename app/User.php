@@ -6,6 +6,7 @@ use App\OAuth\ESI\Authentication;
 use App\OAuth\ESI\Wallet;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 /**
  * App\User
@@ -58,10 +59,18 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
     public function refreshAccessToken()
     {
         if (empty($this->refresh_token)) {
+            Log::info(
+                "User has no refresh token",
+                ['this' => $this->toArray()]
+            );
             return false;
         }
         $auth_data = Authentication::refreshAccessToken($this->refresh_token);
         if ($auth_data != false) {
+            Log::info(
+                "User refreshed token",
+                ['auth_data' => $auth_data, 'getAuthIdentifier' => $this->getAuthIdentifier()]
+            );
             $this->refresh_token = $auth_data->refresh_token;
             $this->access_token = $auth_data->access_token;
             $this->save();
