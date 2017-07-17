@@ -1,6 +1,8 @@
 <?php
 namespace App\OAuth;
 
+use Illuminate\Support\Facades\Log;
+
 class CurlCall
 {
     private static $curl               = '';
@@ -95,19 +97,18 @@ class CurlCall
     /**
      * @return bool|mixed
      */
-    protected static function send()
+    protected static function send($override_curl = null)
     {
+        $curl_instance = $override_curl;
+        if (is_null($curl_instance)) {
+            $curl_instance = self::getCurl();
+        }
         try {
-            $data = json_decode(curl_exec(self::getCurl()));
-            if (!empty($data->error)) {
-//                dd($data);
-                curl_close(self::getCurl());
-                return $data;
-            }
-            curl_close(self::getCurl());
+            $data = json_decode(curl_exec($curl_instance));
+            curl_close($curl_instance);
             return $data;
         } catch (\Exception $excep) {
-//            dd($excep->getMessage()); // just for the test fase (@todo remove before prod tests)
+            Log::error($excep->getMessage() . " -- " . $excep->getFile() . ":" . $excep->getLine());
             return false;
         }
     }
