@@ -3,11 +3,10 @@
 namespace App;
 
 use App\OAuth\ESI\Market;
-use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Order extends ESIModel
 {
-    private static $mapping = [
+    public static $mapping = [
         'account_id'       => null,
         "duration"         => 'duration',
         "escrow"           => 'escrow',
@@ -27,35 +26,6 @@ class Order extends Model
     ];
 
     /**
-     * @param array $orders
-     * @return Order[]
-     */
-    public static function esiToObjects(array $orders)
-    {
-        $new_orders_collection = [];
-        foreach ($orders as $order) {
-            $new_orders_collection[] = self::esiInstanceToObject($order);
-        }
-        return $new_orders_collection;
-    }
-
-    /**
-     * converts a single object to a Order object (normally from ESI)
-     * @param $esi
-     * @return Order
-     */
-    private static function esiInstanceToObject($esi)
-    {
-        $new_order = new Order();
-        foreach (self::$mapping as $key => $map_to) {
-            if (!empty($map_to) && property_exists($esi, $key)) {
-                $new_order->$map_to = $esi->{$key};
-            }
-        }
-        return $new_order;
-    }
-
-    /**
      * Get the user that owns the phone.
      */
     public function type()
@@ -67,12 +37,12 @@ class Order extends Model
      * Return the inventory type name from the inv_type table and set it on this object, caches it on this object.
      * @return string
      */
-    public function getInventoryName()
+    public function getInventoryName() : string
     {
         if (!property_exists($this, 'type_name')) {
             $this->type_name = $this->type()->first()->getName();
         }
-        return $this->type_name;
+        return (string) $this->type_name;
     }
 
     /**
@@ -80,6 +50,34 @@ class Order extends Model
      */
     public function getCompetitionOrders()
     {
-        return Market::getOrdersInRegionByTypeId($this->region_id, $this->type_id);
+        return Market::getOrdersInRegionByTypeId($this->region_id, $this->type_id, $this->getOrderType());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBuyOrder() : bool
+    {
+        return (bool) $this->is_buy_order;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderType() : string
+    {
+        if ($this->isBuyOrder()) {
+            return "buy";
+        }
+        return "sell";
+    }
+
+    /**
+     * Gets prices from region 'The Forge' with a cached time of 1 day.
+     * @return Order[]
+     */
+    public function getPriceInTheForge()
+    {
+        return Market::getOrdersInRegionByTypeId(10000002, $this->type_id, 'sell', 86400);
     }
 }

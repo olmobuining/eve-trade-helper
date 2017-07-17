@@ -100,14 +100,14 @@ class CurlCall
         try {
             $data = json_decode(curl_exec(self::getCurl()));
             if (!empty($data->error)) {
+//                dd($data);
                 curl_close(self::getCurl());
                 return $data;
             }
             curl_close(self::getCurl());
             return $data;
         } catch (\Exception $excep) {
-            curl_close(self::getCurl());
-            dd($excep->getMessage()); // just for the test fase (@todo remove before prod tests)
+//            dd($excep->getMessage()); // just for the test fase (@todo remove before prod tests)
             return false;
         }
     }

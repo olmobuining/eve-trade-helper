@@ -3,6 +3,7 @@
 namespace App;
 
 use App\OAuth\ESI\Authentication;
+use App\OAuth\ESI\Wallet;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -106,6 +107,14 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
             return true;
         }
         return false;
+    }
+
+    /**
+     * @return array|bool|mixed
+     */
+    public function getWalletTransactions()
+    {
+        return Wallet::getTransactions($this->character_id);
     }
 
     /**
