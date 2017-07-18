@@ -104,11 +104,39 @@ class Client implements ClientInterface
         return rawurldecode(http_build_query($data));
     }
 
-    public function send(string $request_type, string $url, array $data = [])
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function isValidRequestType(string $type) : bool
+    {
+        return (bool) in_array($type, self::REQUEST_TYPES);
+    }
+
+    public function request(string $request_type, string $url, array $data = [])
+    {
+        // Force a all capital string.
+        $request_type = strtoupper($request_type);
+        if ($this->isValidRequestType($request_type) === false) {
+            throw new \InvalidArgumentException($request_type ." is not a valid request type.");
+        }
+        $this->setOption(CURLOPT_CUSTOMREQUEST, $request_type);
+
+        $this->setUrl($url);
+    }
+
+    public function get()
     {
         //
     }
 
+    /**
+     * @param $user
+     * @param $password
+     *
+     * @return $this
+     */
     public function setBasicAuth($user, $password)
     {
         if (empty($user) || empty($password)) {
