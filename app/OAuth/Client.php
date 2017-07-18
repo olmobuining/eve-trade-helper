@@ -5,6 +5,8 @@ class Client implements ClientInterface
 {
     protected $client;
 
+    protected $base_url = '';
+
     protected $options = [];
 
     /**
@@ -61,16 +63,34 @@ class Client implements ClientInterface
         return $this;
     }
 
+    /**
+     * @param array $post_data
+     *
+     * @return $this
+     */
     public function setPostFields(array $post_data)
     {
         $this->setOption(CURLOPT_POSTFIELDS, $post_data);
         return $this;
     }
 
+    /**
+     * @param string $url
+     *
+     * @return $this
+     */
     public function setUrl(string $url)
     {
-        $this->setOption(CURLOPT_URL, $url);
+        $this->base_url = $url;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl() : string
+    {
+        return $this->base_url;
     }
 
     /**
@@ -113,6 +133,13 @@ class Client implements ClientInterface
         return (bool) in_array($type, self::REQUEST_TYPES);
     }
 
+    /**
+     * @param string $request_type
+     * @param string $url
+     * @param array  $data
+     *
+     * @return $this
+     */
     public function request(string $request_type, string $url, array $data = [])
     {
         // Force a all capital string.
@@ -123,6 +150,30 @@ class Client implements ClientInterface
         $this->setOption(CURLOPT_CUSTOMREQUEST, $request_type);
 
         $this->setUrl($url);
+        $this->setRequestTypeHeaderWithData($request_type, $data);
+        return $this;
+    }
+
+    /**
+     * @param string $request_type
+     * @param array  $data
+     *
+     * @return $this
+     */
+    private function setRequestTypeHeaderWithData(string $request_type, array $data)
+    {
+        $converted_data = $this->convertRawData($data);
+        switch ($request_type) {
+            case 'POST':
+            case 'PUT':
+                $this->setOption(CURLOPT_POSTFIELDS, $converted_data);
+                $this->setOption(constant("CURLOPT_" . $request_type), true);
+                break;
+            case 'GET':
+                $this->setOption(CURLOPT_URL, $url . "?" . $converted_data);
+                break;
+        }
+        return $this;
     }
 
     public function get()
