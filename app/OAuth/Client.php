@@ -35,7 +35,6 @@ class Client implements ClientInterface
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => false,
             CURLOPT_HEADER => false,
-            CURLOPT_RETURNTRANSFER => true,
         ];
     }
 
