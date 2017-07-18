@@ -22,10 +22,14 @@ class Market extends ESI
         $cache_key = 'Market.Orders.' . $character_id;
         if (!$esi_array = Redis::get($cache_key)) {
             $orders_uri = ESI::BASE_URI . '/characters/' . $character_id . '/orders/';
-            self::setLocation($orders_uri);
+
+            $esi = new ESI();
             $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
-            self::addBearerAuthorization($user);
-            $esi_array = self::send();
+            $esi->setBearerAuthorization($user->access_token);
+            $esi_array = json_decode($esi->request(
+                'GET',
+                $orders_uri
+            )->get()->getBody());
 
             Redis::setex(
                 $cache_key,
@@ -67,11 +71,16 @@ class Market extends ESI
 
         if (!$esi_array = Redis::get($cache_key)) {
             $orders_uri = ESI::BASE_URI . '/markets/' . $region_id . '/orders/';
-            self::setLocation($orders_uri);
+
+            $esi = new ESI();
             $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
-            self::addBearerAuthorization($user);
-            self::setGetValues(['type_id' => $type_id, "order_type" => $order_type]);
-            $esi_array = self::send();
+            $esi->setBearerAuthorization($user->access_token);
+            $esi_array = json_decode($esi->request(
+                'GET',
+                $orders_uri,
+                ['type_id' => $type_id, "order_type" => $order_type]
+            )->get()->getBody());
+
 
             Redis::setex(
                 $cache_key,

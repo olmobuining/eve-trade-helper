@@ -99,6 +99,7 @@ class CurlCall
      */
     protected static function send($override_curl = null)
     {
+        dd("WEDONTUSETHISANYMORE");
         $curl_instance = $override_curl;
         if (is_null($curl_instance)) {
             $curl_instance = self::getCurl();

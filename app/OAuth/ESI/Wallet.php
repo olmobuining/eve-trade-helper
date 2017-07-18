@@ -12,10 +12,19 @@ class Wallet extends ESI
     public static function getTransactions(int $character_id)
     {
         $transactions_uri = ESI::BASE_URI . '/characters/' . $character_id . '/wallet/transactions/';
-        self::setLocation($transactions_uri);
+
+        $esi = new ESI();
         $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
-        self::addBearerAuthorization($user);
-        $esi_array = self::send();
+        $esi->setBearerAuthorization($user->access_token);
+        $req = $esi->request(
+            'GET',
+            $transactions_uri
+        )->get();
+        $esi_array = json_decode($req->getBody());
+        // Temp fix for the wallet API returning errors, should find a different fix.
+        if (isset($esi_array->error)) {
+            return [];
+        }
         return Transaction::esiToObjects($esi_array);
     }
 }

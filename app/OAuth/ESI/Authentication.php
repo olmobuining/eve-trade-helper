@@ -2,7 +2,7 @@
 
 namespace App\OAuth\ESI;
 
-class Authentication extends ESI
+class Authentication
 {
     const AUTHORIZATION_URI = 'https://login.eveonline.com/oauth/token';
     const VERIFY_URI        = 'https://login.eveonline.com/oauth/verify';
@@ -17,14 +17,16 @@ class Authentication extends ESI
         if (empty($auth_code)) {
             throw new \InvalidArgumentException('Authorization code cannot be empty.');
         }
-        self::setLocation(self::AUTHORIZATION_URI);
-        self::setPost();
-        self::setAuthentication();
-        self::setPostValues([
-            'grant_type' => 'authorization_code',
-            'code'       => $auth_code,
-        ]);
-        return self::send();
+        $esi = new ESI();
+        $esi->setAuthentication();
+        return json_decode($esi->request(
+            'POST',
+            self::AUTHORIZATION_URI,
+            [
+                'grant_type' => 'authorization_code',
+                'code'       => $auth_code,
+            ]
+        )->get()->getBody());
     }
 
     /**
@@ -36,9 +38,13 @@ class Authentication extends ESI
         if (empty($access_token)) {
             throw new \InvalidArgumentException('Access token cannot be empty.');
         }
-        self::setLocation(self::VERIFY_URI);
-        self::setBearerAuthorization($access_token);
-        return self::send();
+
+        $esi = new ESI();
+        $esi->setBearerAuthorization($access_token);
+        return json_decode($esi->request(
+            'GET',
+            self::VERIFY_URI
+        )->get()->getBody());
     }
 
     /**
@@ -50,12 +56,16 @@ class Authentication extends ESI
         if (empty($refresh_token)) {
             throw new \InvalidArgumentException('Access token cannot be empty.');
         }
-        self::setLocation(self::AUTHORIZATION_URI);
-        self::setAuthentication();
-        self::setPostValues([
-            'grant_type'          => 'refresh_token',
-            'refresh_token'       => $refresh_token,
-        ]);
-        return self::send();
+
+        $esi = new ESI();
+        $esi->setAuthentication();
+        return json_decode($esi->request(
+            'POST',
+            self::AUTHORIZATION_URI,
+            [
+                'grant_type' => 'refresh_token',
+                'code'       => $refresh_token,
+            ]
+        )->get()->getBody());
     }
 }

@@ -14,7 +14,13 @@ interface ClientInterface
     ];
 
     public function request(string $request_type, string $url, array $data = []);
+
+    public function get();
+
+    public function build();
+
     public function getClient();
+
     public function setClient($client);
 
 }
