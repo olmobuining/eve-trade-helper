@@ -49,16 +49,17 @@ class ESI extends CurlCall
     /**
      * overrule send method. This will force refresh token, if it has the correct error token.
      * returns an empty array if something else is wrong.
-     * @return array|bool|mixed
+     * @return array|bool
      */
-    public static function send()
+    public static function send($override_curl = null)
     {
         $data = parent::send();
         if ($data !== false && isset($data->error)) {
             if ($data->error === "SSO responded with a 400: expired") {
+                $save_curl = self::getCurl();
                 $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
                 $user->refreshAccessToken();
-                $data = parent::send();
+                $data = parent::send($save_curl);
                 Log::error(
                     "Error 400 expired",
                     [
