@@ -1,6 +1,6 @@
 <?php
-namespace App\OAuth\ESI;
 
+namespace App\OAuth\ESI;
 
 use App\Transaction;
 use App\User;
@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class Wallet extends ESI
 {
 
+    /**
+     * @param int $character_id
+     *
+     * @return \App\called_class[]|array
+     */
     public static function getTransactions(int $character_id)
     {
         $transactions_uri = ESI::BASE_URI . '/characters/' . $character_id . '/wallet/transactions/';
