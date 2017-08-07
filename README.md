@@ -36,5 +36,6 @@ Note: Do NOT forget to run `composer install`.
 - [ ] Pretty format date in transactions
 - [ ] Convert ESI classes into a composer package
 - [ ] Move redis caching logic in the Market class to a independent way.
+- [x] :white_check_mark: Refactor Curl Client
 
 And more... if you have any feature requests or idea's, please let me know. (by creating an issue)
