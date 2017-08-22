@@ -16,3 +16,5 @@ Route::get('/', 'HomeController@home');
 Route::get('login', [ 'as' => 'login', 'uses' => 'AuthController@login']);
 Route::get('logout', [ 'as' => 'logout', 'uses' => 'AuthController@logout']);
 Route::get('callback', 'AuthController@callback');
+
+Route::get('/orders/all', 'HomeController@currentOrders');

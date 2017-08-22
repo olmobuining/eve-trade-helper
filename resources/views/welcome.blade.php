@@ -8,7 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Buy and sell market orders</div>
                 <div class="panel-body">
-                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info" data-order="[[ 2, &quot;desc&quot; ]]">
+                    <table id="orders_table" class="table table-striped table-bordered no-footer" role="grid" aria-describedby="datatable_info">
                         <thead>
                         <tr>
                             <th style="width:30px;"><i class="fa fa-info-circle"></i></th>
@@ -20,39 +20,6 @@
                             <th>Outbid Ƶ price</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach ($orders as $order)
-                            <tr>
-                                <td>
-                                    {{ strtoupper($order->getOrderType()) }}
-                                </td>
-                                <td>
-                                    {{ $order->volume_remain }}
-                                </td>
-                                <td data-order="{{$order->price}}">
-                                    {{ number_format($order->price, 2, ",", ".") }}
-                                </td>
-                                <td data-order="{{$order->forge_price}}">
-                                    {{ number_format($order->forge_price, 2, ",", ".") }}
-                                </td>
-                                <td>
-                                    {{ $order->getInventoryName() }}
-                                </td>
-                                <td>
-                                    @if ($order->outbid)
-                                        Yes
-                                    @else
-                                        No
-                                    @endif
-                                </td>
-                                <td data-order="{{$order->outbid_price}}">
-                                    @if ($order->outbid)
-                                        {{ number_format($order->outbid_price, 2, ",", ".") }}
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
