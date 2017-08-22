@@ -1,6 +1,23 @@
 $(function() {
     $('#side-menu').metisMenu();
     $('.dataTable').DataTable();
+    $('#orders_table').DataTable({
+        "ajax": "/orders/all",
+        "order": [[2, 'desc']],
+        "language": {
+            "decimal": ",",
+            "thousands": "."
+        },
+        'columns': [
+            { "data": "type" },
+            { "data": "volume_remain" },
+            { "data" : "price" },
+            { "data": "forge_price" },
+            { "data": "inventory_name" },
+            { "data": "outbid" },
+            { "data": "outbid_price" },
+        ]
+    })
 });
 
 //Loads the correct sidebar on window load,

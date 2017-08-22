@@ -63,8 +63,8 @@ class Authentication
             'POST',
             self::AUTHORIZATION_URI,
             [
-                'grant_type' => 'refresh_token',
-                'code'       => $refresh_token,
+                'grant_type'          => 'refresh_token',
+                'refresh_token'       => $refresh_token,
             ]
         )->get()->getBody());
     }
