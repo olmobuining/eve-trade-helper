@@ -2,6 +2,8 @@
 namespace App\OAuth\ESI;
 
 use App\OAuth\Client;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class ESI extends Client
 {
@@ -30,5 +32,21 @@ class ESI extends Client
                 'Authorization: Bearer ' . $access_token,
             ]
         );
+    }
+
+    public function get()
+    {
+        $get = parent::get();
+        $body = json_decode($get->getBody());
+        if ($body
+            && isset($body->error)
+            && $body->error === "expired"
+            && $body->sso_status == 400
+        ) {
+            $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
+            $user->refreshAccessToken();
+            return parent::get();
+        }
+        return $get;
     }
 }
