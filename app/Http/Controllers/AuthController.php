@@ -25,6 +25,7 @@ class AuthController extends Controller
         Auth::logout();
         return Redirect::route('login');
     }
+
     /**
      * EVE Swagger Interface returns the user to this URL after login and authorisation.
      */
