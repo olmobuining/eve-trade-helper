@@ -34,6 +34,11 @@ class ESI extends Client
         );
     }
 
+    /**
+     * Same as the extended class only if the request is 'expired' it will refresh the token.
+     * @TODO check that this is not infinitely called - if the ESI only returns 'expired'
+     * @return $this
+     */
     public function get()
     {
         $get = parent::get();
