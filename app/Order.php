@@ -40,7 +40,11 @@ class Order extends ESIModel
     public function getInventoryName() : string
     {
         if (!property_exists($this, 'type_name')) {
-            $this->type_name = $this->type()->first()->getName();
+            $type_object = $this->type()->first();
+            if ($type_object === null) {
+                return '';
+            }
+            $this->type_name = $type_object->getName();
         }
         return (string) $this->type_name;
     }
