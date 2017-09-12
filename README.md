@@ -37,5 +37,6 @@ Note: Do NOT forget to run `composer install`.
 - [ ] Convert ESI classes into a composer package
 - [ ] Move redis caching logic in the Market class to a independent way.
 - [x] :white_check_mark: Refactor Curl Client
+- [ ] Proper API for transactions, and orders.
 
 And more... if you have any feature requests or idea's, please let me know. (by creating an issue)
