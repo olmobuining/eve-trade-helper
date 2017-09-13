@@ -119,6 +119,28 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
     }
 
     /**
+     * Returns validation of the current user.
+     * This checks the authorization code of the user, and fills the refresh code.
+     * After it will try to receive the character data.
+     *
+     * @return bool|string
+     */
+    public function validate()
+    {
+        $verified = $this->verifyAuthorizationCode();
+        if ($verified === false) {
+            Log::error("Failed to authorization code");
+            return 'Verification of authorization code failed, please try again.';
+        }
+        $character_data_received = $this->getCharacterData();
+        if ($character_data_received === false) {
+            Log::error("Failed to receive character data");
+            return 'Could not receive character data, please try again.';
+        }
+        return true;
+    }
+
+    /**
      * @return array|bool|mixed
      */
     public function getWalletTransactions()
