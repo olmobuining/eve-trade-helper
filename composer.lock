@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "95db7822619aa909a6956f257c75b1fe",
+    "content-hash": "565845517df0a78b90b2badbf0312a00",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -822,6 +822,58 @@
                 }
             ],
             "time": "2015-04-20T18:58:01+00:00"
+        },
+        {
+            "name": "kkomelin/laravel-translatable-string-exporter",
+            "version": "0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kkomelin/laravel-translatable-string-exporter.git",
+                "reference": "b904c33730a898260c1295e3d5af66e7d9ea7097"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kkomelin/laravel-translatable-string-exporter/zipball/b904c33730a898260c1295e3d5af66e7d9ea7097",
+                "reference": "b904c33730a898260c1295e3d5af66e7d9ea7097",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.4.4",
+                "illuminate/translation": "^5.4.4",
+                "php": ">=5.4.0",
+                "symfony/finder": "^3.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "KKomelin\\TranslatableStringExporter\\Providers\\ExporterServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "KKomelin\\TranslatableStringExporter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Komelin",
+                    "email": "konstantin.komelin@gmail.com"
+                }
+            ],
+            "description": "Translatable String Exporter for Laravel >= 5.4",
+            "keywords": [
+                "export",
+                "exporter",
+                "laravel",
+                "translations"
+            ],
+            "time": "2017-09-11T18:31:00+00:00"
         },
         {
             "name": "laravel/framework",

@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>EVE Trade Helper -- @yield('title')</title>
+    <title>{{ __('EVE Trade Helper') }} -- @yield('title')</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/css/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">

@@ -130,12 +130,12 @@ class User extends Model implements \Illuminate\Contracts\Auth\Authenticatable
         $verified = $this->verifyAuthorizationCode();
         if ($verified === false) {
             Log::error("Failed to authorization code");
-            return 'Verification of authorization code failed, please try again.';
+            return __('Verification of authorization code failed, please try again.');
         }
         $character_data_received = $this->getCharacterData();
         if ($character_data_received === false) {
             Log::error("Failed to receive character data");
-            return 'Could not receive character data, please try again.';
+            return __('Could not receive character data, please try again.');
         }
         return true;
     }

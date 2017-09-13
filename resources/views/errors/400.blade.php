@@ -1,1 +1,1 @@
-400 Bad request!
+{{ __('400 Bad request!') }}

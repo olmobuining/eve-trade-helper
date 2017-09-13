@@ -10,7 +10,7 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="{{ URL::route('logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="{{ URL::route('logout') }}"><i class="fa fa-sign-out fa-fw"></i> {{ __('Logout') }}</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->
@@ -23,7 +23,7 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="/"><i class="fa fa-dashboard fa-fw"></i> Start</a>
+                    <a href="/"><i class="fa fa-dashboard fa-fw"></i> {{ __('Start') }}</a>
                 </li>
 
             </ul>

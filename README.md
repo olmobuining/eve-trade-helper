@@ -38,5 +38,9 @@ Note: Do NOT forget to run `composer install`.
 - [ ] Move redis caching logic in the Market class to a independent way.
 - [x] :white_check_mark: Refactor Curl Client
 - [ ] Proper API for transactions, and orders.
+- [ ] Translation support in frontend
+- [x] Dutch translation of custom strings
+- [ ] French translation
+- [ ] Convert some translatables to short keys
 
 And more... if you have any feature requests or idea's, please let me know. (by creating an issue)
