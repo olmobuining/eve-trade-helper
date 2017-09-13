@@ -42,6 +42,7 @@ class Order extends ESIModel
         if (!property_exists($this, 'type_name')) {
             $type_object = $this->type()->first();
             if ($type_object === null) {
+                // We do not set the type_name property on purpose, so that it can try again later.
                 return '';
             }
             $this->type_name = $type_object->getName();
