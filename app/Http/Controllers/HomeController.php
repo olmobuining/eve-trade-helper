@@ -31,11 +31,19 @@ class HomeController extends Controller
             $order->outbid = false;
             $order->outbid_price = 0;
             foreach ($competition as $comp) {
-                if ($comp->price > $order->price || ($order->outbid && $order->outbid_price < $comp->price)) {
-                    $order->outbid = true;
-                    $order->outbid_price = $comp->price;
+                if ($order->isBuyOrder()) {
+                    if ($comp->price > $order->price || ($order->outbid && $order->outbid_price < $comp->price)) {
+                        $order->outbid = true;
+                        $order->outbid_price = $comp->price;
+                    }
+                } else {
+                    if ($comp->price < $order->price || ($order->outbid && $order->outbid_price > $comp->price)) {
+                        $order->outbid = true;
+                        $order->outbid_price = $comp->price;
+                    }
                 }
             }
+
             $order->type = strtoupper($order->getOrderType());
             $order->forge_price = 0;
             $order->inventory_name = $order->getInventoryName();
@@ -50,6 +58,7 @@ class HomeController extends Controller
             $order->price_order = $order->price;
             $order->price = number_format($order->price, 2, ",", ".");
         }
+
         return ['data' => $orders];
     }
 }

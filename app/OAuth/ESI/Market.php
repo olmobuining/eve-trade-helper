@@ -39,6 +39,7 @@ class Market extends ESI
         } else {
             $esi_array = unserialize($esi_array);
         }
+
         if ($esi_array == false) {
             Redis::del($cache_key);
             return [];
