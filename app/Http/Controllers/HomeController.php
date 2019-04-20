@@ -22,6 +22,14 @@ class HomeController extends Controller
         return view('welcome', compact('character_name', 'transactions'));
     }
 
+    public function refresh()
+    {
+        $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
+        Market::deleteOrderCacheForCharater($user->character_id);
+
+        return 'success';
+    }
+
     public function currentOrders()
     {
         $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();

@@ -178,6 +178,7 @@ class Client implements ClientInterface
         $this->setUrl($url);
         // First set the url, because `setRequestTypeHeaderWithData` requires you to have a base url
         $this->setRequestTypeHeaderWithData($request_type, $data);
+
         return $this;
     }
 
@@ -282,6 +283,7 @@ class Client implements ClientInterface
         $ch = curl_init();
         curl_setopt_array($ch, $this->getOptions());
         $this->setMessage($ch);
+
         return $this->getMessage();
     }
 
@@ -296,6 +298,7 @@ class Client implements ClientInterface
         } catch (\Exception $excep) {
             Log::error($excep->getMessage() . " -- " . $excep->getFile() . ":" . $excep->getLine());
         }
+
         return $this;
     }
 

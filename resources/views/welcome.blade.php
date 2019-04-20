@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Buy and sell market orders</div>
+                <div class="panel-heading">Buy and sell market orders <a href="#refresh" id="refresh_order_table">Refresh data</a></div>
                 <div class="panel-body">
                     <table id="orders_table" class="table table-striped table-bordered no-footer" role="grid" aria-describedby="datatable_info">
                         <thead>

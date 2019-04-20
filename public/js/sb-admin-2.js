@@ -17,7 +17,11 @@ $(function() {
             { "data": "outbid" },
             { "data": "outbid_price" },
         ]
-    })
+    });
+    $('#refresh_order_table').click(function () {
+        $.getJSON('/orders/all/refresh');
+        $('#orders_table').DataTable().ajax.reload();
+    });
 });
 
 //Loads the correct sidebar on window load,

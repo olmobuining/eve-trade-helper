@@ -18,3 +18,4 @@ Route::get('logout', [ 'as' => 'logout', 'uses' => 'AuthController@logout']);
 Route::get('callback', 'AuthController@callback');
 
 Route::get('/orders/all', 'HomeController@currentOrders');
+Route::get('/orders/all/refresh', 'HomeController@refresh');

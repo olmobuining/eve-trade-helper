@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Redis;
 
 class Market extends ESI
 {
+    public static function deleteOrderCacheForCharater(int $character_id)
+    {
+        $cache_key = 'Market.Orders.' . $character_id;
+        Redis::del($cache_key);
+    }
+
     /**
      * Get orders for the authenticated user aka character
      *
@@ -26,16 +32,29 @@ class Market extends ESI
             $esi = new ESI();
             $user = User::whereCharacterId(Auth::user()->getAuthIdentifier())->first();
             $esi->setBearerAuthorization($user->access_token);
-            $esi_array = json_decode($esi->request(
+            $request = $esi->request(
                 'GET',
                 $orders_uri
-            )->get()->getBody());
+            )->get();
 
-            Redis::setex(
-                $cache_key,
-                $cache_time,
-                serialize($esi_array)
-            );
+            if ($request->getStatusCode() === 403) {
+                $user->refreshAccessToken();
+                $request = $esi->request(
+                    'GET',
+                    $orders_uri
+                )->get();
+            }
+
+            $esi_array = false;
+            if ($request->getStatusCode() === 200) {
+                $esi_array = json_decode($request->getBody());
+
+                Redis::setex(
+                    $cache_key,
+                    $cache_time,
+                    serialize($esi_array)
+                );
+            }
         } else {
             $esi_array = unserialize($esi_array);
         }
