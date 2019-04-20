@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ESI extends Client
 {
-    const BASE_URI = 'https://esi.tech.ccp.is/latest';
+    const BASE_URI = 'https://esi.evetech.net/latest';
 
     /**
      * Add basic client ID and secret for authentication to the curl call.
@@ -30,6 +30,7 @@ class ESI extends Client
             CURLOPT_HTTPHEADER,
             [
                 'Authorization: Bearer ' . $access_token,
+                'accept: application/json',
             ]
         );
     }

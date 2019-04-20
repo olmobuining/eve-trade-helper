@@ -25,11 +25,13 @@ class Wallet extends ESI
             'GET',
             $transactions_uri
         )->get();
+
         $esi_array = json_decode($req->getBody());
         // Temp fix for the wallet API returning errors, should find a different fix.
-        if (isset($esi_array->error)) {
+        if (isset($esi_array->error) || empty($esi_array)) {
             return [];
         }
+
         return Transaction::esiToObjects($esi_array);
     }
 }

@@ -69,6 +69,7 @@ class Order extends ESIModel
         if ($this->isBuyOrder()) {
             return "buy";
         }
+
         return "sell";
     }
 
