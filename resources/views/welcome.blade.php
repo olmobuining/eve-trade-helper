@@ -10,15 +10,15 @@
                 <div class="panel-body">
                     <table id="orders_table" class="table table-striped table-bordered no-footer" role="grid" aria-describedby="datatable_info">
                         <thead>
-                        <tr>
-                            <th style="width:30px;"><i class="fa fa-info-circle"></i></th>
-                            <th style="width:20px;">Q</th>
-                            <th>Ƶ Price</th>
-                            <th>Ƶ Price in The Forge</th>
-                            <th>Product</th>
-                            <th>Outbid</th>
-                            <th>Outbid Ƶ price</th>
-                        </tr>
+                            <tr>
+                                <th style="width:30px;"><i class="fa fa-info-circle"></i></th>
+                                <th style="width:20px;">Q</th>
+                                <th style="width:100px;">Ƶ Price</th>
+                                <th style="width:100px;">Ƶ Price in The Forge</th>
+                                <th>Product</th>
+                                <th>Outbid</th>
+                                <th>Outbid Ƶ price</th>
+                            </tr>
                         </thead>
                     </table>
                 </div>
@@ -34,7 +34,8 @@
                         <thead>
                         <tr>
                             <th style="width:30px;"><i class="fa fa-info-circle"></i></th>
-                            <th>Ƶ Price</th>
+                            <th style="width:20px;">Q</th>
+                            <th style="width:80px;">Ƶ Price</th>
                             <th>Product</th>
                             <th>Date</th>
                         </tr>
@@ -49,7 +50,10 @@
                                         SELL
                                     @endif
                                 </td>
-                                <td data-order="{{$transaction->unit_price}}">
+                                <td>
+                                    {{ $transaction->quantity }}
+                                </td>
+                                <td data-order="{{$transaction->unit_price}}" style="text-align: right;">
                                     {{ number_format($transaction->unit_price, 2, ",", ".") }}
                                 </td>
                                 <td>
