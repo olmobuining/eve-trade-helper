@@ -77,8 +77,8 @@ class Order extends ESIModel
      * Gets prices from region 'The Forge' with a cached time of 1 day.
      * @return Order[]
      */
-    public function getPriceInTheForge()
+    public function getPriceInTheForge($type = 'sell')
     {
-        return Market::getOrdersInRegionByTypeId(10000002, $this->type_id, 'sell', 86400);
+        return Market::getOrdersInRegionByTypeId(10000002, $this->type_id, $type, 86400);
     }
 }

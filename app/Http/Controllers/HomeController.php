@@ -55,10 +55,16 @@ class HomeController extends Controller
             $order->type = strtoupper($order->getOrderType());
             $order->forge_price = 0;
             $order->inventory_name = $order->getInventoryName();
-            $theforge = $order->getPriceInTheForge();
+            $theforge = $order->getPriceInTheForge($order->getOrderType());
             foreach ($theforge as $forge) {
-                if ($order->forge_price > $forge->price || $order->forge_price == 0) {
-                    $order->forge_price = $forge->price;
+                if ($order->isBuyOrder()) {
+                    if ($order->forge_price < $forge->price || $order->forge_price == 0) {
+                        $order->forge_price = $forge->price;
+                    }
+                } else {
+                    if ($order->forge_price > $forge->price || $order->forge_price == 0) {
+                        $order->forge_price = $forge->price;
+                    }
                 }
             }
             $order->forge_price = number_format($order->forge_price, 2, ",", ".");
