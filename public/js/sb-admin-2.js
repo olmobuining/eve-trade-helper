@@ -11,8 +11,8 @@ $(function() {
         'columns': [
             { "data": "type" },
             { "data": "volume_remain" },
-            { "data" : "price" },
-            { "data": "forge_price" },
+            { "data" : "price", "className": "priceCell" },
+            { "data": "forge_price", "className": "priceCell" },
             { "data": "inventory_name" },
             { "data": "outbid" },
             { "data": "outbid_price" },

@@ -36,4 +36,24 @@ class Transaction extends ESIModel
         }
         return $this->type_name;
     }
+
+    /**
+     * @return bool
+     */
+    public function isBuyOrder() : bool
+    {
+        return (bool) $this->is_buy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType() : string
+    {
+        if ($this->isBuyOrder()) {
+            return 'buy';
+        }
+
+        return 'sell';
+    }
 }

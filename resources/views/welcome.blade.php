@@ -4,6 +4,38 @@
 @endsection
 @section('content')
     <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-money fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">Ƶ {{ number_format($total_sell, 0, ",", ".") }}</div>
+                            <div>Total Ƶ in sell orders</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-download fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">Ƶ {{ number_format($total_buy, 0, ",", ".") }}</div>
+                            <div>Total Ƶ in buy orders</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Buy and sell market orders <a href="#refresh" id="refresh_order_table">Refresh data</a></div>
@@ -25,12 +57,62 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-money fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">Ƶ {{ number_format($profit, 0, ",", ".") }}</div>
+                            <div>Total Ƶ profit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-money fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">Ƶ {{ number_format(($profit/100)*8, 0, ",", ".") }}</div>
+                            <div>Tax paid on profited items</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-money fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">Ƶ {{ number_format($profit-(($profit/100)*8), 0, ",", ".") }}</div>
+                            <div>Profit with tax deducted</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Transactions</div>
                 <div class="panel-body">
-                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info" data-order="[[ 3, &quot;desc&quot; ]]">
+                    <table id="datatable" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="datatable_info" data-order="[[ 4, &quot;desc&quot; ]]">
                         <thead>
                         <tr>
                             <th style="width:30px;"><i class="fa fa-info-circle"></i></th>
