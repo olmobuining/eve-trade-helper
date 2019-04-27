@@ -23,6 +23,10 @@ $(function() {
         $('#orders_table').DataTable().ajax.reload();
     });
 });
+function openMarket(type_id) {
+    console.log(type_id);
+    $.getJSON('/eve/open-market/type/' + type_id);
+}
 
 //Loads the correct sidebar on window load,
 //collapses the sidebar on window resize.

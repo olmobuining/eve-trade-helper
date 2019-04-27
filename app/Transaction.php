@@ -2,19 +2,21 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
 class Transaction extends ESIModel
 {
     public static $mapping = [
-        "transaction_id" => "transaction_id",
-        "date"           => "date",
-        "location_id"    => "location_id",
-        "type_id"        => "type_id",
-        "unit_price"     => "unit_price",
-        "quantity"       => "quantity",
-        "client_id"      => "client_id",
-        "is_buy"         => "is_buy",
-        "is_personal"    => "is_personal",
-        "journal_ref_id" => "journal_ref_id",
+        'transaction_id' => 'transaction_id',
+        'date' => 'date',
+        'location_id' => 'location_id',
+        'type_id' => 'type_id',
+        'unit_price' => 'unit_price',
+        'quantity' => 'quantity',
+        'client_id' => 'client_id',
+        'is_buy' => 'is_buy',
+        'is_personal' => 'is_personal',
+        'journal_ref_id' => 'journal_ref_id',
     ];
 
     /**
@@ -55,5 +57,12 @@ class Transaction extends ESIModel
         }
 
         return 'sell';
+    }
+
+    public function getDateForTimezone($timezone = 'America/Toronto')
+    {
+        $datetime = new Carbon($this->date, 'UTC');
+
+        return $datetime->setTimezone($timezone);
     }
 }

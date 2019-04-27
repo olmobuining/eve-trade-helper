@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\OAuth\ESI\Market;
+use App\OAuth\ESI\UserInterface;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -42,6 +43,7 @@ class HomeController extends Controller
                     unset($buy_transactions[$key]);
                     $cost = $buy_transaction->quantity * $buy_transaction->unit_price;
                     $profit += ($sell_transaction->quantity * $sell_transaction->unit_price) - $cost;
+                    break;
                 }
             }
         }
@@ -85,7 +87,7 @@ class HomeController extends Controller
 
                 $order->type = strtoupper($order->getOrderType());
                 $order->forge_price = 0;
-                $order->inventory_name = $order->getInventoryName();
+                $order->inventory_name = '<a href="javascript:openMarket(' . $order->type_id . ')">' . $order->getInventoryName() . '</a>';
                 $theforge = $order->getPriceInTheForge($order->getOrderType());
                 foreach ($theforge as $forge) {
                     if ($order->isBuyOrder()) {
@@ -113,5 +115,10 @@ class HomeController extends Controller
         }
 
         return ['data' => $orders];
+    }
+
+    public function openMarket($tyoe_id)
+    {
+        return UserInterface::openMarket($tyoe_id);
     }
 }

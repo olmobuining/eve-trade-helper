@@ -19,3 +19,5 @@ Route::get('callback', 'AuthController@callback');
 
 Route::get('/orders/all', 'HomeController@currentOrders');
 Route::get('/orders/all/refresh', 'HomeController@refresh');
+
+Route::get('/eve/open-market/type/{type_id}', 'HomeController@openMarket');

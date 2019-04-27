@@ -139,10 +139,10 @@
                                     {{ number_format($transaction->unit_price, 2, ",", ".") }}
                                 </td>
                                 <td>
-                                    {{ $transaction->getInventoryName() }}
+                                    <a href="javascript:openMarket({{ $transaction->type_id }})">{{ $transaction->getInventoryName() }}</a>
                                 </td>
                                 <td>
-                                    {{ $transaction->date }}
+                                    {{ $transaction->getDateForTimezone()->format('Y-m-d H:i:s') }}
                                 </td>
                             </tr>
                         @endforeach

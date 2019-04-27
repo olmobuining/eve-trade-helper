@@ -7,22 +7,22 @@ use App\OAuth\ESI\Market;
 class Order extends ESIModel
 {
     public static $mapping = [
-        'account_id'       => null,
-        "duration"         => 'duration',
-        "escrow"           => 'escrow',
-        "is_buy_order"     => 'is_buy_order',
-        "is_corp"          => 'is_corp',
-        "issued"           => 'issued',
-        "location_id"      => 'location_id',
-        "min_volume"       => 'min_volume',
-        "order_id"         => 'order_id',
-        "price"            => 'price',
-        "range"            => 'range',
-        "region_id"        => 'region_id',
-        "state"            => 'state',
-        "type_id"          => 'type_id',
-        "volume_remain"    => 'volume_remain',
-        "volume_total"     => 'volume_total',
+        'account_id' => null,
+        'duration' => 'duration',
+        'escrow' => 'escrow',
+        'is_buy_order' => 'is_buy_order',
+        'is_corp' => 'is_corp',
+        'issued' => 'issued',
+        'location_id' => 'location_id',
+        'min_volume' => 'min_volume',
+        'order_id' => 'order_id',
+        'price' => 'price',
+        'range' => 'range',
+        'region_id' => 'region_id',
+        'state' => 'state',
+        'type_id' => 'type_id',
+        'volume_remain' => 'volume_remain',
+        'volume_total' => 'volume_total',
     ];
 
     /**
